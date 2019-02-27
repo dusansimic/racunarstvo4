@@ -33,6 +33,9 @@ class NeuralNetwork:
 
 		self.weights += d_weights
 
+	def predict(self, x):
+		return sigmoid(net(x, self.weights, self.bias))
+
 if __name__ == '__main__':
 	x = np.array([
 		[0, 0],
@@ -46,12 +49,7 @@ if __name__ == '__main__':
 		[1],
 		[1]
 	])
-	bias = np.array([
-		[1],
-		[1],
-		[1],
-		[1]
-	])
+	bias = 1
 
 	maxIter = 500000
 	iterStep = maxIter / 10
@@ -69,3 +67,16 @@ if __name__ == '__main__':
 	print('\n\nafter training:')
 	for i in range(4):
 		print(x[i], y[i], nn.output[i])
+
+	print('\n\n')
+	res = nn.predict(np.array([
+		[0, 1],
+		[1, 0],
+		[0, 0],
+		[1, 1],
+		[0, 0],
+		[0, 1],
+		[1, 1]
+	]))
+	for result in res:
+		print(result, 1 if result[0] > 0.5 else 0 if result[0] < 0.5 else '?')
